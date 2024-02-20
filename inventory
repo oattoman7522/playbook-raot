@@ -1,1 +1,39 @@
-gitlabsso ansible_host=192.168.1.234
+# gitlabsso ansible_host=192.168.1.234
+; blockchain1 ansible_host=10.99.71.17
+; blockchain2 ansible_host=10.99.71.29
+; blockchain3 ansible_host=10.99.71.36
+webserver1 ansible_host=10.99.71.18
+webserver2 ansible_host=10.99.71.19
+sonarqube ansible_host=10.99.76.29
+gitlab ansible_host=10.99.71.35
+jenkins ansible_host=10.99.71.28
+elk ansible_host=10.99.71.27
+k8smaster1 ansible_host=10.99.71.21
+k8smaster2 ansible_host=10.99.71.22
+k8smaster3 ansible_host=10.99.71.30
+k8sworker1 ansible_host=10.99.71.24
+k8sworker2 ansible_host=10.99.71.31
+k8sworker3 ansible_host=10.99.71.32
+infra1 ansible_host=10.99.71.25
+infra2 ansible_host=10.99.71.33
+monitor1 ansible_host=10.99.71.26
+monitor2 ansible_host=10.99.71.34
+
+
+[ALLNODES]
+webserver1 
+webserver2 
+sonarqube 
+gitlab 
+jenkins 
+elk 
+k8smaster1 
+k8smaster2 
+k8smaster3 
+k8sworker1 
+k8sworker2 
+k8sworker3 
+infra1 
+infra2 
+monitor1 
+monitor2 
