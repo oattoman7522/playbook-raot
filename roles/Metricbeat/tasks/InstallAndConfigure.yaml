@@ -1,6 +1,5 @@
-#- name: Install Metricbeat
-#  ansible.builtin.shell:
-#    cmd:  sudo rpm -vi /tmp/metricbeat-8.12.1-x86_64.rpm
+- name: Install Metricbeat
+  ansible.builtin.command: sudo rpm -vi /tmp/metricbeat-8.12.1-x86_64.rpm
 
 - name: Create metricbeat.yml file
   ansible.builtin.template:
@@ -14,20 +13,28 @@
     dest: /etc/metricbeat/modules.d/system.yml
     mode: '755'
 
+- name: Check modules system
+  ansible.builtin.command: "metricbeat modules list | grep system"
+  register: moduleslist
 
-#- name: Check modules system
-#  ansible.builtin.shell:
-#    cmd: metricbeat modules list | grep system
- 
-
-#- name: Enable modules
-#  ansible.builtin.shell:
-#    cmd:  netstat -auptn | grep 9200
-
+- name: Debug modules list
+  ansible.builtin.debug:
+    var: moduleslist
 
 - name: Enable modules
-  ansible.builtin.shell:
-    cmd: |
-      systemctl start metricbeat
-      systemctl enable metricbeat
+  ansible.builtin.shell: "netstat -auptn | grep {{ portlogstash }}"
 
+- name: Start and enabled service Metricbeat
+  ansible.builtin.service:
+    name: metricbeat
+    state: started
+    enabled: true
+
+- name: Check status service Metricbeat
+  ansible.builtin.systemd:
+    name: metricbeat
+  register: statusmetricbeat
+
+- name: Debug modules list
+  ansible.builtin.debug:
+    var: statusmetricbeat.status

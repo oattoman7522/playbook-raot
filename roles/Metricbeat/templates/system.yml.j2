@@ -1,5 +1,5 @@
 - module: system
-  period: 10s
+  period: {{ period }}m
   metricsets:
     - cpu
     - load
@@ -21,7 +21,7 @@
   core.metrics: ["percentages"]  # The other available option is ticks.
 
 - module: system
-  period: 1m
+  period: {{ period }}m
   metricsets:
     - filesystem
     - fsstat
@@ -29,7 +29,7 @@
   - drop_event.when.regexp:
       system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)'
 - module: system
-  period: 15m
+  period: {{ period }}m
   metricsets:
     - uptime
 
