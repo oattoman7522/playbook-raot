@@ -1,0 +1,20 @@
+- name: Prerequisite software the lastest version
+  ansible.builtin.yum:
+    name: 
+    - perl-Digest-SHA 
+    - telnet
+    - net-tools 
+    state: latest
+
+
+- name: Get Metricbeat Package version 8.12.1
+  ansible.builtin.get_url:
+    url: https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.12.1-x86_64.rpm 
+    dest: /tmp/
+    mode: '755'   
+
+
+- name: SHA Checksums
+  ansible.builtin.shell:
+    cmd:  shasum -a 512 /tmp/metricbeat-8.12.1-x86_64.rpm
+

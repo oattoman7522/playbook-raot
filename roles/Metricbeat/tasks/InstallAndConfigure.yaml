@@ -1,0 +1,33 @@
+#- name: Install Metricbeat
+#  ansible.builtin.shell:
+#    cmd:  sudo rpm -vi /tmp/metricbeat-8.12.1-x86_64.rpm
+
+- name: Create metricbeat.yml file
+  ansible.builtin.template:
+    src: /root/playbook-raot/roles/Metricbeat/templates/metricbeat.yml.j2 
+    dest: /etc/metricbeat/metricbeat.yml
+    mode: '755'
+
+- name: Create system.yml file
+  ansible.builtin.template:
+    src: /root/playbook-raot/roles/Metricbeat/templates/system.yml.j2
+    dest: /etc/metricbeat/modules.d/system.yml
+    mode: '755'
+
+
+#- name: Check modules system
+#  ansible.builtin.shell:
+#    cmd: metricbeat modules list | grep system
+ 
+
+#- name: Enable modules
+#  ansible.builtin.shell:
+#    cmd:  netstat -auptn | grep 9200
+
+
+- name: Enable modules
+  ansible.builtin.shell:
+    cmd: |
+      systemctl start metricbeat
+      systemctl enable metricbeat
+

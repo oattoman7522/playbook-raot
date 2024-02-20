@@ -1,0 +1,17 @@
+---
+- name: Start service firewall
+  ansible.builtin.service:
+    name: firewalld
+    state: started 
+
+- name: Stop service firewalls, if started
+  ansible.builtin.service:
+    name: firewalld
+    state: stopped
+
+- name: Get Status
+  ansible.builtin.systemd:
+    name: firewalld.service
+  register: status
+
+- debug: var=status.status.ActiveState

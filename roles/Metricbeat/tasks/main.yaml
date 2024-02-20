@@ -1,0 +1,6 @@
+- name: Prepartion
+  ansible.builtin.import_tasks: Preparation.yaml
+
+
+- name: Install and Configure Metricbeat
+  ansible.builtin.import_tasks: InstallAndConfigure.yaml 

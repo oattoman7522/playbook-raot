@@ -1,0 +1,20 @@
+---
+# - name: Install Kubernetes
+#  hosts: HOME
+#  roles:
+#  - kubeadm
+
+# - name: Reset cluster
+#   hosts: ALLNODES
+#   roles:
+#   - Resetcluster
+
+# - name: Test Jenkins
+#   hosts: localhost
+#   roles:
+#   - Promote Vault HA
+
+- name: Start service jenkins
+  hosts: gitlabsso
+  roles:
+  - Metricbeat
