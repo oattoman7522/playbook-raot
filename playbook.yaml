@@ -17,4 +17,5 @@
 - name: Start service jenkins
   hosts: gitlabsso
   roles:
+  - Clearmetricbeat
   - Metricbeat

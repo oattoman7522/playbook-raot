@@ -1,0 +1,20 @@
+---
+- name: Remove file Configure
+  ansible.builtin.file:
+    path: {{ item }}
+    state: absent
+  loop:
+     - /etc/metricbeat/
+     - /var/lib/metricbeat/
+     - /var/log/metricbeat/
+     - /tmp/metricbeat/
+
+- name: Stop service metricbeat
+  ansible.builtin.service:
+    name: metricbeat
+    state: stopped
+
+- name: Yum uninstall metricbeat
+  ansible.builtin.yum:
+    name: metricbeat
+    state: absent
