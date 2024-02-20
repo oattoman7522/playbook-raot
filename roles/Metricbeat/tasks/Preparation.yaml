@@ -6,6 +6,11 @@
     - net-tools 
     state: latest
 
+- name: Make diectory for file install metricbeat
+  ansible.builtin.file:
+      path: /tmp/metricbeat/
+      state: directory
+      mode: '0755'
 
 - name: Scp file install Metricbeat Package version 8.12.1 to all nodes
   ansible.builtin.copy:
