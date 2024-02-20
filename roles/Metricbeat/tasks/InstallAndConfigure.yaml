@@ -19,7 +19,7 @@
 
 - name: Debug modules list
   ansible.builtin.debug:
-    var: moduleslist
+    var: moduleslist.stdout_lines
 
 # - name: Check port service logstash
 #   ansible.builtin.shell: "netstat -auptn | grep {{ portlogstash }}"
@@ -35,6 +35,6 @@
     name: metricbeat
   register: statusmetricbeat
 
-- name: Debug modules list
+- name: Debug status service metricbeat
   ansible.builtin.debug:
-    var: statusmetricbeat.status
+    var: statusmetricbeat.status.ActiveState
