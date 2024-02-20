@@ -1,10 +1,10 @@
-- name: Prerequisite software the lastest version
-  ansible.builtin.yum:
-    name: 
-    - perl-Digest-SHA 
-    - telnet
-    - net-tools 
-    state: latest
+# - name: Prerequisite software the lastest version
+#   ansible.builtin.yum:
+#     name: 
+#     - perl-Digest-SHA 
+#     - telnet
+#     - net-tools 
+#     state: latest
 
 - name: Make diectory for file install metricbeat
   ansible.builtin.file:
