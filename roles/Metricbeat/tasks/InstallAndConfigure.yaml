@@ -19,7 +19,7 @@
 
 - name: Debug modules list
   ansible.builtin.debug:
-    var: moduleslist.stdout_lines.Enabled
+    var: moduleslist.stdout_lines
 
 # - name: Check port service logstash
 #   ansible.builtin.shell: "netstat -auptn | grep {{ portlogstash }}"
