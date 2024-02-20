@@ -21,8 +21,8 @@
   ansible.builtin.debug:
     var: moduleslist
 
-- name: Enable modules
-  ansible.builtin.shell: "netstat -auptn | grep {{ portlogstash }}"
+# - name: Check port service logstash
+#   ansible.builtin.shell: "netstat -auptn | grep {{ portlogstash }}"
 
 - name: Start and enabled service Metricbeat
   ansible.builtin.service:
