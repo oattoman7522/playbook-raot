@@ -17,5 +17,5 @@
 
 - name: SHA Checksums
   ansible.builtin.shell:
-    cmd:  shasum -a 512 /tmp/metricbeat-8.12.1-x86_64.rpm
+    cmd:  shasum -a 512 /tmp/metricbeat/metricbeat-8.12.1-x86_64.rpm
 
