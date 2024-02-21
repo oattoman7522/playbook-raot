@@ -19,6 +19,27 @@ infra2 ansible_host=10.99.71.33
 monitor1 ansible_host=10.99.71.26
 monitor2 ansible_host=10.99.71.34
 
+[WEB]
+webserver1 
+webserver2 
+
+[CICD] 
+sonarqube 
+gitlab 
+jenkins 
+elk 
+
+[K8S]
+k8smaster1 
+k8smaster2 
+k8smaster3 
+k8sworker1 
+k8sworker2 
+k8sworker3 
+infra1 
+infra2 
+monitor1 
+monitor2 
 
 [ALLNODES]
 webserver1 

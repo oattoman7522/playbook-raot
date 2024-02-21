@@ -14,8 +14,8 @@
 #   roles:
 #   - Promote Vault HA
 
-- name: Start service jenkins
-  hosts: gitlabsso
+- name: Install and config metricbeat
+  hosts: CICD
   roles:
-  - Clearmetricbeat
+#  - Clearmetricbeat
   - Metricbeat
