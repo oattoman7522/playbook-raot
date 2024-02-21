@@ -14,8 +14,8 @@
 
 - name: Scp file install Metricbeat Package version 8.12.1 to all nodes
   ansible.builtin.copy:
-    src: /root/playbook-raot/roles/Metricbeat/templates/metricbeat-8.12.1-x86_64.rpm
-    dest: /tmp/metricbeat/metricbeat-8.12.1-x86_64.rpm
+    src: /root/playbook-raot/roles/Metricbeat/templates/metricbeat-{{ version }}-x86_64.rpm
+    dest: /tmp/metricbeat/metricbeat-{{ version }}-x86_64.rpm
     owner: root
     group: root
     mode: '0644'

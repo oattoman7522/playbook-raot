@@ -15,7 +15,7 @@
 #   - Promote Vault HA
 
 - name: Install and config metricbeat
-  hosts: CICD
+  hosts: all
   roles:
-#  - Clearmetricbeat
+  - Clearmetricbeat
   - Metricbeat

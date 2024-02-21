@@ -1,5 +1,5 @@
 - name: Install Metricbeat
-  ansible.builtin.command: sudo rpm -vi /tmp/metricbeat/metricbeat-8.12.1-x86_64.rpm
+  ansible.builtin.command: sudo rpm -vi /tmp/metricbeat/metricbeat-{{ version }}-x86_64.rpm
 
 - name: Create metricbeat.yml file
   ansible.builtin.template:
