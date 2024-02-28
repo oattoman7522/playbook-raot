@@ -14,7 +14,7 @@
     mode: '755'
 
 - name: Check modules system
-  ansible.builtin.command: "metricbeat modules list | grep system"
+  ansible.builtin.command: "sudo metricbeat modules list | grep system"
   register: moduleslist
 
 - name: Debug modules list
