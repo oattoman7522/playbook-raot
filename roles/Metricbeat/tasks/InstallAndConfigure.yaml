@@ -25,16 +25,19 @@
 #   ansible.builtin.shell: "netstat -auptn | grep {{ portlogstash }}"
 
 - name: Start and enabled service Metricbeat
+  become: true
   ansible.builtin.service:
     name: metricbeat
     state: started
     enabled: true
 
 - name: Check status service Metricbeat
+  become: true
   ansible.builtin.systemd:
     name: metricbeat
   register: statusmetricbeat
 
 - name: Debug status service metricbeat
+  become: true
   ansible.builtin.debug:
     var: statusmetricbeat.status.ActiveState

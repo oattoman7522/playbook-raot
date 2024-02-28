@@ -13,11 +13,12 @@
       mode: '0755'
 
 - name: Scp file install Metricbeat Package version 8.12.1 to all nodes
+  become: true
   ansible.builtin.copy:
     src: /root/playbook-raot/roles/Metricbeat/templates/metricbeat-{{ version }}-x86_64.rpm
     dest: /tmp/metricbeat/metricbeat-{{ version }}-x86_64.rpm
-    owner: "{{ user }}"
-    group: "{{ user }}"
+    owner: root
+    group: root
     mode: '0644'
 
 # - name: SHA Checksums
