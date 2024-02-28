@@ -15,7 +15,7 @@
 #   - Promote Vault HA
 
 - name: Install and config metricbeat
-  hosts: all
+  hosts: BLOCKCHAIN
   roles:
-  - Clearmetricbeat
+#  - Clearmetricbeat
   - Metricbeat
