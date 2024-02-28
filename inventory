@@ -1,7 +1,7 @@
 # gitlabsso ansible_host=192.168.1.234
-blockchain1 ansible_host=10.99.71.17
-blockchain2 ansible_host=10.99.71.29
-blockchain3 ansible_host=10.99.71.36
+blockchain1 ansible_host=10.99.71.17 ansible_user=oracle
+blockchain2 ansible_host=10.99.71.29 ansible_user=oracle
+blockchain3 ansible_host=10.99.71.36 ansible_user=oracle
 webserver1 ansible_host=10.99.71.18
 webserver2 ansible_host=10.99.71.19
 sonarqube ansible_host=10.99.76.29

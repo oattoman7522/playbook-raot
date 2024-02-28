@@ -16,8 +16,8 @@
   ansible.builtin.copy:
     src: /root/playbook-raot/roles/Metricbeat/templates/metricbeat-{{ version }}-x86_64.rpm
     dest: /tmp/metricbeat/metricbeat-{{ version }}-x86_64.rpm
-    owner: root
-    group: root
+    owner: {{ user }}
+    group: {{ user }}
     mode: '0644'
 
 # - name: SHA Checksums
