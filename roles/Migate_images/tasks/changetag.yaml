@@ -1,0 +1,88 @@
+---
+# - name: List images
+#   ansible.builtin.command: docker images
+#   register: images
+#   changed_when: true
+
+# - name: Debug images
+#   ansible.builtin.debug:
+#     var: images.stdout_lines
+
+- name: Get images on nexus
+  ansible.builtin.uri:
+    url: https://192.168.1.215:8443/service/rest/v1/components?repository=test-few
+    force_basic_auth: true
+    status_code: 200
+    method: GET
+    user: admin
+    password: admin
+    ca_path: /root/ca.crt
+    headers:
+      Content-Type: "application/json"
+  register: docker
+
+# - name: Setfact
+#   ansible.builtin.set_fact:
+#     list_images: docker.json
+
+- name: Debug images
+  ansible.builtin.debug:
+    msg: "{{ docker.json['items'] | json_query('[].name') }}"
+  register: list_images
+
+- name: Debug version
+  ansible.builtin.debug:
+    msg: "{{ docker.json['items'] | json_query('[].version') }}"
+  register: list_version
+
+- name: Debug URL images
+  ansible.builtin.debug:
+    msg: "nx02.localdomain:9001/{{ item.name }}:{{ item.version }}"
+  loop: "{{docker.json['items']}}"
+
+- name: Log into private registry and force re-authorization
+  community.docker.docker_login:
+    registry_url: nx02.localdomain:9001
+    username: admin
+    password: admin
+    reauthorize: true
+
+- name: Pull an image
+  community.docker.docker_image:
+    name: "nx02.localdomain:9001/{{ item.name }}"
+    tag: "{{ item.version }}"
+    source: pull
+  loop: "{{docker.json['items']}}"
+
+- name: Log into private registry and force re-authorization
+  community.docker.docker_login:
+    registry_url: nx02.localdomain:9876
+    username: admin
+    password: admin
+    reauthorize: true
+
+- name: Tag and push to docker hub
+  community.docker.docker_image:
+    name: "nx02.localdomain:9001/{{ item.name }}:{{ item.version }}"
+    repository: "nx02.localdomain:9876/{{ item.name }}:{{ item.version }}"
+    push: true
+    source: local
+  loop: "{{docker.json['items']}}"
+
+# - name: Debug images
+#   ansible.builtin.debug:
+#     var: "{{ docker.json.items | json_query('[?format == `docker`].name') }}"
+
+# - name: Log into private registry and force re-authorization
+#   community.docker.docker_login:
+#     registry_url: nx02.localdomain:9001
+#     username: admin
+#     password: admin
+#     reauthorize: true
+
+# - name: Tag and push to docker hub
+#   community.docker.docker_image:
+#     name: nginx:latest
+#     repository: nx02.localdomain:9001/repository/test-few/nginx:v2
+#     push: true
+#     source: local

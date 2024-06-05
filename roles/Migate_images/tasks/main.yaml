@@ -1,0 +1,3 @@
+---
+- name: Initcluster
+  ansible.builtin.import_tasks: changetag.yaml

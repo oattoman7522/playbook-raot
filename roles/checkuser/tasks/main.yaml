@@ -1,8 +1,0 @@
----
-- name: Check user
-  ansible.builtin.command: "whoami"
-  register: whoami
-
-- name: Debug user
-  ansible.builtin.debug:
-    var: whoami

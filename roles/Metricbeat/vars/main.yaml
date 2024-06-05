@@ -1,5 +1,5 @@
 logstashserver: 10.99.71.27
 portlogstash: 30000
 period: 10
-version: 8.5.1
+version: 8.12.1
 user: oracle

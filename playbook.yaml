@@ -14,8 +14,8 @@
 #   roles:
 #   - Promote Vault HA
 
-- name: Install and config metricbeat
-  hosts: BLOCKCHAIN
+- name: Migate Images
+  hosts: localhost
+  become: true
   roles:
-#  - Clearmetricbeat
-  - Metricbeat
+  - Migate_images
