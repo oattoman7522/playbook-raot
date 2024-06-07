@@ -1,88 +1,119 @@
 ---
-# - name: List images
-#   ansible.builtin.command: docker images
-#   register: images
-#   changed_when: true
+# - name: Get images on nexus
+#   ansible.builtin.uri:
+#     url: https://192.168.1.215:8443/service/rest/v1/components?repository=test-few
+#     force_basic_auth: true
+#     status_code: 200
+#     method: GET
+#     user: {{ user_nexus }}
+#     password: {{ password_nexus }}
+#     ca_path: /root/ca.crt
+#     headers:
+#       Content-Type: "application/json"
+#   register: docker
 
-# - name: Debug images
+# - name: Debug name images on nexus
 #   ansible.builtin.debug:
-#     var: images.stdout_lines
+#     msg: "{{ docker.json['items'] | json_query('[].name') }}"
+#   register: list_images
 
-- name: Get images on nexus
+# - name: Debug version tag images on nexus
+#   ansible.builtin.debug:
+#     msg: "{{ docker.json['items'] | json_query('[].version') }}"
+#   register: list_version
+
+# - name: Debug URL images on nexus
+#   ansible.builtin.debug:
+#     msg: "nx02.localdomain:9001/{{ item.name }}:{{ item.version }}"
+#   loop: "{{docker.json['items']}}"
+
+- name: Get project on gitlab
   ansible.builtin.uri:
-    url: https://192.168.1.215:8443/service/rest/v1/components?repository=test-few
+    url: http://{{ url_gitlab }}/api/v4/projects
     force_basic_auth: true
+    return_content: true
     status_code: 200
     method: GET
-    user: admin
-    password: admin
-    ca_path: /root/ca.crt
     headers:
-      Content-Type: "application/json"
-  register: docker
+      PRIVATE-TOKEN: "{{ token_gitlab }}"
+  register: result
 
-# - name: Setfact
-#   ansible.builtin.set_fact:
-#     list_images: docker.json
-
-- name: Debug images
+- name: Print all projects
   ansible.builtin.debug:
-    msg: "{{ docker.json['items'] | json_query('[].name') }}"
-  register: list_images
+    msg: "{{ item.id }}"
+  loop: "{{ result.json }}"
+  register: project_gitlab
 
-- name: Debug version
+- name: Debug URL images on gitlab
   ansible.builtin.debug:
-    msg: "{{ docker.json['items'] | json_query('[].version') }}"
-  register: list_version
+    msg: http://{{ url_gitlab }}/api/v4/projects/{{ item.id }}/registry/repositories
+  loop: "{{ result.json }}"
 
-- name: Debug URL images
+- name: Get images on gitlab
+  ansible.builtin.uri:
+    url: http://{{ url_gitlab }}/api/v4/projects/{{ item.id }}/registry/repositories
+    force_basic_auth: true
+    return_content: true
+    status_code: 200
+    method: GET
+    headers:
+      PRIVATE-TOKEN: "{{ token_gitlab }}"
+  loop: "{{ result.json }}"
+  register: image
+
+# - name: Print all images on project gitlab
+#   ansible.builtin.debug:
+#     msg: "{{ item.json | json_query('[].location') }}"
+# #   loop: "{{ image.results }}"
+
+- name: Get tag images on gitlab
+  ansible.builtin.uri:
+    url: http://{{ url_gitlab }}/api/v4/projects/{{ item.json | json_query('[0].project_id') }}/registry/repositories/{{ item.json | json_query('[0].id') }}/tags
+    force_basic_auth: true
+    return_content: true
+    status_code: 200
+    method: GET
+    headers:
+      PRIVATE-TOKEN: "{{ token_gitlab }}"
+  loop: "{{ image.results }}"
+  register: tags
+
+- name: Print all tag images on project gitlab 1
   ansible.builtin.debug:
-    msg: "nx02.localdomain:9001/{{ item.name }}:{{ item.version }}"
-  loop: "{{docker.json['items']}}"
+    msg: "{{ item }}"
+  loop: "{{ tags.results | json_query('[].json[].location') }}"
+  register: image_gitlab
 
-- name: Log into private registry and force re-authorization
+- name: Print all name images on project gitlab 1
+  ansible.builtin.debug:
+    msg: "{{ item }}"
+  loop: "{{ tags.results | json_query('[].json[].path') }}"
+  register: name_gitlab
+
+- name: Log into images registry on gitlab
   community.docker.docker_login:
-    registry_url: nx02.localdomain:9001
-    username: admin
-    password: admin
+    registry_url: "http://{{ url_registry_gitlab }}"
+    username: "{{ user_gitlab }}"
+    password: "{{ password_gitlab }}"
     reauthorize: true
 
-- name: Pull an image
+- name: Pull an image on gitlab
   community.docker.docker_image:
-    name: "nx02.localdomain:9001/{{ item.name }}"
-    tag: "{{ item.version }}"
+    name: "{{ item }}"
     source: pull
-  loop: "{{docker.json['items']}}"
+  loop: "{{ tags.results | json_query('[].json[].location') }}"
 
-- name: Log into private registry and force re-authorization
+- name: Log into images registry on nexus
   community.docker.docker_login:
-    registry_url: nx02.localdomain:9876
-    username: admin
-    password: admin
+    registry_url: "{{ url_registry_nexus }}"
+    username: "{{ user_nexus }}"
+    password: "{{ password_nexus }}"
     reauthorize: true
 
-- name: Tag and push to docker hub
+- name: Tag and push to images registry on nexus
   community.docker.docker_image:
-    name: "nx02.localdomain:9001/{{ item.name }}:{{ item.version }}"
-    repository: "nx02.localdomain:9876/{{ item.name }}:{{ item.version }}"
+    name: "{{ url_registry_gitlab }}/{{ item }}"
+    repository: "{{ url_registry_nexus }}/{{ item }}"
     push: true
     source: local
-  loop: "{{docker.json['items']}}"
-
-# - name: Debug images
-#   ansible.builtin.debug:
-#     var: "{{ docker.json.items | json_query('[?format == `docker`].name') }}"
-
-# - name: Log into private registry and force re-authorization
-#   community.docker.docker_login:
-#     registry_url: nx02.localdomain:9001
-#     username: admin
-#     password: admin
-#     reauthorize: true
-
-# - name: Tag and push to docker hub
-#   community.docker.docker_image:
-#     name: nginx:latest
-#     repository: nx02.localdomain:9001/repository/test-few/nginx:v2
-#     push: true
-#     source: local
+  loop: "{{ tags.results | json_query('[].json[].path') }}"

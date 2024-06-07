@@ -1,2 +1,11 @@
 ---
-nexus_credentials: YWRtaW47YWRtaW4K
+######## gitlab ##############
+url_gitlab: jfok.com
+url_registry_gitlab: jfok.com:5000
+token_gitlab: dr4bjcvmiisQz6dyLA2p
+user_gitlab: root
+password_gitlab: P@ssw0rd
+########### nexus ###########
+url_registry_nexus: 192.168.1.212:9876
+user_nexus: admin
+password_nexus: admin
