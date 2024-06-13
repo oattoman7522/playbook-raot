@@ -1,0 +1,17 @@
+---
+- name: Remove file pm kubernetes
+  ansible.builtin.file:
+    path: /tmp/kubernetes.info
+    state: absent
+
+- name: Run script pm kubernetes
+  ansible.builtin.script: pmkubernetes.sh
+
+- name: Cat file pn kubernetes
+  ansible.builtin.command: "cat /tmp/kubernetes.info"
+  register: pm
+  changed_when: true
+
+- name: Debug pm kubernetes
+  ansible.builtin.debug:
+    var: pm.stdout_lines

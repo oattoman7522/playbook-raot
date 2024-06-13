@@ -25,8 +25,8 @@ blockchain2
 blockchain3
 
 [WEB]
-webserver1 
-webserver2 
+webserver1
+webserver2
 
 [CICD] 
 sonarqube 

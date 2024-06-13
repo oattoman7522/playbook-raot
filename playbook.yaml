@@ -20,7 +20,12 @@
 #   roles:
 #   - Migate_images
 
-- name: Script PM
-  hosts: K8S
+# - name: Script PM
+#   hosts: ALLNODES
+#   roles:
+#     - script_pm
+
+- name: Script PM kubernetes
+  hosts: k8smaster1
   roles:
-    - script_pm
+    - script_pm_kubernetes
