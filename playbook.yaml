@@ -14,8 +14,13 @@
 #   roles:
 #   - Promote Vault HA
 
-- name: Migate Images
-  hosts: localhost
-  become: true
+# - name: Migate Images
+#   hosts: localhost
+#   become: true
+#   roles:
+#   - Migate_images
+
+- name: Script PM
+  hosts: K8S
   roles:
-  - Migate_images
+    - script_pm
