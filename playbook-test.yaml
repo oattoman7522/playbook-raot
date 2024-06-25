@@ -1,5 +1,5 @@
 ---
 - name: Script PM
-  hosts: localhost
+  hosts: nexus
   roles:
     - testdocker
