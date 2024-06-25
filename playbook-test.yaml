@@ -1,5 +1,7 @@
 ---
 - name: Script PM
+  collections:
+   - community.docker
   hosts: nexus
   roles:
     - testdocker
