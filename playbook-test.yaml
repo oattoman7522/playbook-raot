@@ -1,4 +1,5 @@
 - name: Test Docker
-  
-  role: testdocker
+  hosts: localhost
+  roles: 
+  - testdocker
   
