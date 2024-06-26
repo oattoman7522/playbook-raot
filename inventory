@@ -4,7 +4,7 @@ blockchain3 ansible_host=10.99.71.36 ansible_user=oracle
 blockchain4 ansible_host=10.99.71.17
 webserver1 ansible_host=10.99.71.18
 webserver2 ansible_host=10.99.71.19
-sonarqube ansible_host=10.99.76.29
+sonarqube-1 ansible_host=10.99.76.29
 gitlab ansible_host=10.99.71.35
 jenkins ansible_host=10.99.71.28
 elk ansible_host=10.99.71.27
@@ -28,7 +28,7 @@ webserver1
 webserver2
 
 [CICD] 
-sonarqube 
+sonarqube-1 
 gitlab 
 jenkins 
 elk 
@@ -48,7 +48,7 @@ monitor2
 [ALLNODES]
 webserver1 
 webserver2 
-sonarqube 
+sonarqube-1
 gitlab 
 jenkins 
 elk 
@@ -62,3 +62,4 @@ infra1
 infra2 
 monitor1 
 monitor2 
+fewfew
