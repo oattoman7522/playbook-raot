@@ -18,6 +18,7 @@ infra1 ansible_host=10.99.71.25
 infra2 ansible_host=10.99.71.33
 monitor1 ansible_host=10.99.71.26
 monitor2 ansible_host=10.99.71.34
+test-aap ansible_host=192.168.1.212
 
 [BLOCKCHAIN]
 blockchain2
