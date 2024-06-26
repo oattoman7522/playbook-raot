@@ -21,7 +21,7 @@
 #   - Migate_images
 
 - name: Script PM
-  hosts: localhost
+  hosts: jenkins
   roles:
     - script_pm
 
