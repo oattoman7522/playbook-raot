@@ -1,0 +1,5 @@
+- name: Check firewall
+  ansible.builtin.command: "curl -v telnet://{{IP_VM}}:{{ item }}
+  changed_when: true
+  loop:
+   - "{{ port }}""
