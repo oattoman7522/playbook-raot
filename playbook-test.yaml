@@ -1,7 +1,5 @@
 ---
-- name: Script PM
-  collections:
-   - community.docker
+- name: Script report
   hosts: nexus
   roles:
-    - testdocker
+    - script_monthly
