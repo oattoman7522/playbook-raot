@@ -23,7 +23,7 @@
 - name: Script PM
   hosts: "{{ host_vm }}"
   roles:
-    - script_pm
+    - "{{ task_role }}"
 
 # - name: Script PM kubernetes
 #   hosts: k8smaster1
