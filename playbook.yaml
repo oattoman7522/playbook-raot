@@ -21,7 +21,7 @@
 #   - Migate_images
 
 - name: Script PM
-  hosts: "{{ host_vm_1 }}"
+  hosts: "{{ host_vm }}"
   roles:
     - "{{ task_role }}"
 
