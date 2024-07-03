@@ -1,5 +1,5 @@
 ---
 - name: Script report
-  hosts: nexus
+  hosts: all
   roles:
     - script_monthly
