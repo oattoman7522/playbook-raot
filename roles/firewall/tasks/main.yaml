@@ -2,3 +2,4 @@
   ansible.builtin.command: "curl -v telnet://{{IP_VM}}:{{ item }}"
   changed_when: true
   loop: "{{ Port_svc }}"
+  ansible_command_timeout: 10
