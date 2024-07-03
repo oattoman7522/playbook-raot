@@ -1,5 +1,5 @@
 ---
 - name: Script report
-  hosts: all
+  hosts: {{ host_vm }}
   roles:
     - script_monthly
