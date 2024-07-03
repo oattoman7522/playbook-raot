@@ -8,4 +8,5 @@
 
 - name: list firewall
   ansible.builtin.debug:
-    var: result
+    msg: "{{ item }}"
+  loop: "{{result.results}}"
